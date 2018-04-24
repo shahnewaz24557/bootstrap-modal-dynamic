@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<a href="#my_modal" url="name-one" data-toggle="modal" data-name="Name One" data-price="100" class="btn btn-success modalBtn">Open Modal 1</a>
+	<a href="#my_modal" url="name-two" data-toggle="modal" data-name="Name Two" data-price="200" class="btn btn-primary modalBtn">Open Modal 2</a>
+	<a href="#my_modal" url="name-three" data-toggle="modal" data-name="Name Three" data-price="300" class="btn btn-primary modalBtn">Open Modal 3</a>
+
+	<div class="modal" id="my_modal">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			  <h4 class="modal-title">Modal header</h4>
+		  </div>
+		  <div class="modal-body">
+			<p>Awesome! Dynamic Value Received.</p>
+			<div id="details"></div>
+			<button type="button" class="btn btn-default" id="myBtn">Click Me</button>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<script>
+		$('#my_modal').on('show.bs.modal', function(e) {
+		
+			$('.modalBtn').click(function(){
+				window.location.hash = $(this).attr('url');
+			});
+			
+			// Receiving Dynamic Data
+			var name = $(e.relatedTarget).data('name');
+			var price = $(e.relatedTarget).data('price');
+			
+			var onclick = 'alert("'+name+'", "'+price+'")';
+			
+			// Remove if Element Exist By ID
+			var nameId = document.getElementById('name');
+			var priceId = document.getElementById('price');
+			if(nameId){
+				document.getElementById('name').remove();
+			}
+			if(priceId){
+				document.getElementById('price').remove();
+			}
+			
+			// Creating New Element With Id
+			var p_name = document.createElement('p');
+			p_name.id = 'name';
+			document.getElementById('details').append(p_name);
+			var p_price = document.createElement('p');
+			p_price.id = 'price';
+			document.getElementById('details').append(p_price);
+			
+			// Finally Writing Dynamic Data to the Modal
+			document.getElementById("name").append(name);
+			document.getElementById("myBtn").setAttribute("onclick", onclick);
+			document.getElementById("price").append(price);
+		});
+	</script>
+
+
+</body>
+
+</html>
